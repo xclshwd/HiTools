@@ -1,7 +1,0 @@
-export RELEASE_ROOT_DIR:=/home/shliu/N9M/release
-export PRODUCT_TYPE:=A5_AHD
-export CROSS_COMPILER:=arm-hisiv300-linux-
-export COMPILER_NAME:=arm-hisiv300
-export CFLAGS=-mcpu=cortex-a7 -mfloat-abi=softfp -mfpu=neon-vfpv4 -mno-unaligned-access -fno-aggressive-loop-optimizations
-export SDK_DIR:=/home/shliu/N9M/SDK/3521a
-export DEBUG_VERSION:=n
