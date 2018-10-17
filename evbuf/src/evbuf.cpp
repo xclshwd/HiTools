@@ -54,7 +54,6 @@ int evbuffer_expand(struct evbuffer *buf, size_t datlen)
 	
 	/* If we can fit all the data, then we don't have to do anything */
 	if (buf->totallen >= need)
-<<<<<<< HEAD
 	{
 		return (0);
 	}
@@ -92,16 +91,19 @@ int evbuffer_expand(struct evbuffer *buf, size_t datlen)
 		{
 			return (-1);
 		}
-=======
+
 		return (0);
 	
 		/*
 		* If the misalignment fulfills our data needs, we just force an
 		* alignment to happen.  Afterwards, we have enough space.
 	*/
-	if (buf->misalign >= datlen) {
+	if (buf->misalign >= datlen) 
+	{
 		evbuffer_align(buf);
-	} else {
+	} 
+	else 
+	{
 		void *newbuf;
 		size_t length = buf->totallen;
 		
@@ -115,7 +117,6 @@ int evbuffer_expand(struct evbuffer *buf, size_t datlen)
 			evbuffer_align(buf);
 		if ((newbuf = realloc(buf->buffer, length)) == NULL)
 			return (-1);
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
 		
 		buf->orig_buffer = buf->buffer = (unsigned char *)newbuf;
 		buf->totallen = length;
@@ -128,18 +129,20 @@ int evbuffer_add(struct evbuffer *buf, const void *data, size_t datlen)
 {
 	size_t need = buf->misalign + buf->off + datlen;
 	
-<<<<<<< HEAD
 	if (buf->totallen < need) 
 	{
 		if (evbuffer_expand(buf, datlen) == -1)
 		{
 			return (-1);
 		}
-=======
-	if (buf->totallen < need) {
+
+	if (buf->totallen < need) 
+	{
 		if (evbuffer_expand(buf, datlen) == -1)
+		{
 			return (-1);
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
+		}
+
 	}
 	memcpy(buf->buffer + buf->off, data, datlen);
 	buf->off += datlen;
@@ -151,12 +154,11 @@ int evbuffer_add(struct evbuffer *buf, const void *data, size_t datlen)
 void evbuffer_drain(struct evbuffer *buf, size_t len)
 {
 	
-<<<<<<< HEAD
 	if (len >= buf->off) 
 	{
-=======
-	if (len >= buf->off) {
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
+
+	if (len >= buf->off) 
+	{
 		buf->off = 0;
 		buf->buffer = buf->orig_buffer;
 		buf->misalign = 0;
@@ -191,45 +193,20 @@ int evbuffer_read(struct evbuffer *buf, int fd, int howmuch)
 	
 
 	if (howmuch < 0 || howmuch > n)
-<<<<<<< HEAD
-	{
-		howmuch = n;
-	}
-	
-	/* If we don't have FIONREAD, we might waste some space here */
-	if (evbuffer_expand(buf, howmuch) == -1)
-	{
-		return (-1);
-	}
-=======
 		howmuch = n;
 	
 	/* If we don't have FIONREAD, we might waste some space here */
 	if (evbuffer_expand(buf, howmuch) == -1)
 		return (-1);
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
 	
 	/* We can append new data at this point */
 	p = buf->buffer + buf->off;
 	
 	n = net_read(fd, p, howmuch);
-<<<<<<< HEAD
-	
-	if (n == -1)
-	{
-		return (-1);
-	}
-	
-	if (n == 0)
-	{
-		return (0);
-	}
-=======
 	if (n == -1)
 		return (-1);
 	if (n == 0)
 		return (0);
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
 	
 	buf->off += n;
 	
@@ -242,23 +219,10 @@ int evbuffer_write(struct evbuffer *buffer, int fd)
 	
 	n = net_write(fd, buffer->buffer, buffer->off);
 	if (n == -1)
-<<<<<<< HEAD
-	{
-		return (-1);
-	}
-	
-	if (n == 0)
-	{
-		return (0);
-	}
-	evbuffer_drain(buffer, n);
-	
-=======
 		return (-1);
 	if (n == 0)
 		return (0);
 	evbuffer_drain(buffer, n);
->>>>>>> b68ec37d1e673509533fb2dd7f2a0013675c40c8
 	return (n);
 }
 
